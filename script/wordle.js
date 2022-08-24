@@ -22,7 +22,6 @@ const ouvinteDeTeclas = (event) => {
 
     if (char == 'ENTER') {
         validarEntrada()
-        linha += 1
         return;
     }
 
@@ -56,11 +55,11 @@ function exibeLetra(letra) {
 }
 
 function validarEntradaComParametros(palavraInserida, linhaAtual) {
-    //Remover depois que implementação acabar
-    for (let i=0; i < palavraInserida.length; ++i){
-        exibeLetrasComParametros(palavraInserida[i], 1, i+1 )
-    }
-    // Aqui acaba a remoção
+    // //Remover depois que implementação acabar
+    // for (let i=0; i < palavraInserida.length; ++i){
+    //     exibeLetrasComParametros(palavraInserida[i], 1, i+1 )
+    // }
+    // // Aqui acaba a remoção
 
     let classesDeCores= ['incorrect','incorrect','incorrect','incorrect','incorrect']
 
@@ -133,14 +132,14 @@ function pintarCoresDeLetras(linha, classesDeCores) {
     }
 }
 
-//Apagar após implementação
-let cores=validarEntradaComParametros(['R', 'A', 'R', 'O', 'R'], 0)
-
-pintarCoresDeLetras(1, cores)
-
-linha=2
-
-// Apagar até aqui
+// //Apagar após implementação
+// let cores=validarEntradaComParametros(['R', 'A', 'R', 'O', 'R'], 0)
+//
+// pintarCoresDeLetras(1, cores)
+//
+// linha=2
+//
+// // Apagar até aqui
 
 function validarEntrada() {
     if (entrada.length === tamanhoMaximoPalavra){
