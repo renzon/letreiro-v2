@@ -64,22 +64,63 @@ function validarEntradaComParametros(palavraInserida, linhaAtual) {
 
     let classesDeCores= ['incorrect','incorrect','incorrect','incorrect','incorrect']
 
-    function calcularPosicioesDeLestras(palavra) {
+    function calcularPosicioesDeLetras(palavra) {
         let posicoesPorLetra = {} //{'A':[], 'R':[], 'O':[], 'Z':[]};
         for (let letra of palavra){
             posicoesPorLetra[letra]=[]
         }
 
-        for(let indice in palavra){
+        for(let indice=0; indice< palavra.length; ++ indice){
             let posicoes = posicoesPorLetra[palavra[indice]]
             posicoes.push(indice)
         }
         return posicoesPorLetra
     }
 
-    let posicoesLetrasPalavraDoDia = calcularPosicioesDeLestras(palavraDoDia)
-    let posicoesLetrasDigitadas = calcularPosicioesDeLestras(palavraInserida)
+    let posicoesLetrasPalavraDoDia = calcularPosicioesDeLetras(palavraDoDia)
+    let posicoesLetrasDigitadas = calcularPosicioesDeLetras(palavraInserida)
     // Resolver caso de letras nas posicoes fullcorretas, contar quantas foram pintadas
+    for (let letraDaPalavraDoDia in posicoesLetrasPalavraDoDia){
+        let posicoesDaLetraDaPalavraDoDia = posicoesLetrasPalavraDoDia[letraDaPalavraDoDia]
+        let posicoesDaLetraDigitada = posicoesLetrasDigitadas[letraDaPalavraDoDia]
+        if (posicoesDaLetraDigitada === undefined){
+            // Esse é caso em que a letra não foi digitada
+            continue
+        }
+        let maximoDeLetrasCorretas = posicoesDaLetraDaPalavraDoDia.length
+        // Logica de marcar letras fullcorretas
+        for (let posicaoDeLetraDoDia of posicoesDaLetraDaPalavraDoDia){
+            for (let posicaoDeLetraDigitada of posicoesDaLetraDigitada){
+                if (posicaoDeLetraDoDia === posicaoDeLetraDigitada){
+                    classesDeCores[posicaoDeLetraDigitada] = 'fullcorrect'
+                    --maximoDeLetrasCorretas
+                }
+            }
+        }
+        // Logica de marcar letras corretas
+        for (let posicaoDeLetraDigitada of posicoesDaLetraDigitada){
+            if (maximoDeLetrasCorretas<=0){
+                // Todas corretas já foram pintadas
+                break
+            }
+            let letraEncontrada = false
+            for (let posicaoDeLetraDoDia of posicoesDaLetraDaPalavraDoDia){
+                if (posicaoDeLetraDoDia === posicaoDeLetraDigitada){
+                    letraEncontrada=true
+                }
+            }
+            if (!letraEncontrada){
+                classesDeCores[posicaoDeLetraDigitada] = 'correct'
+                --maximoDeLetrasCorretas
+            }
+
+        }
+
+
+
+
+
+    }
     // Pintar corretas baseado na informação anterior e posicoes.
     return classesDeCores
 }
@@ -93,7 +134,7 @@ function pintarCoresDeLetras(linha, classesDeCores) {
 }
 
 //Apagar após implementação
-let cores=validarEntradaComParametros(['A', 'R', 'R', 'O', 'Z'], 0)
+let cores=validarEntradaComParametros(['R', 'A', 'R', 'O', 'R'], 0)
 
 pintarCoresDeLetras(1, cores)
 
